@@ -6,8 +6,8 @@
         <div v-if="todos.length">
             <transition-group name="fade-slide">
                 <div v-for="t in todos" v-bind:key="t._id">
-                    <todoComponent v-if="value === ''" v-bind:todo="t" v-on:delete-todo="$emit('delete-todo', t._id)" />
-                    <todoComponent v-else-if="t.completed === value" v-bind:todo="t" v-on:delete-todo="$emit('delete-todo', t._id)" />
+                    <todoComponent v-if="value === ''" v-bind:todo="t" v-on:delete-todo="$emit('delete-todo', t._id)" @update="$emit('update')" />
+                    <todoComponent v-else-if="t.completed === value" v-bind:todo="t" v-on:delete-todo="$emit('delete-todo', t._id)" @update="$emit('update')" />
                 </div>
             </transition-group>
         </div>

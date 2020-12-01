@@ -3,7 +3,7 @@
     <navbar />
     <addTodo @add-todo="add" @sort="sortTodos" />
     <div class="container">
-      <todos v-bind:loading="loading" :value="sort" :todos="todos" @delete-todo="delTodo" />
+      <todos v-bind:loading="loading" :value="sort" :todos="todos" @delete-todo="delTodo" @update="fetchTodos" />
     </div>
   </div>
 </template>
@@ -32,7 +32,6 @@ export default {
   methods: {
     delTodo(id) {
       // this.todos = this.todos.filter(todo => todo._id !== id)
-
       fetch(`http://localhost:9999/api/todos/${id}`, {
         method: 'DELETE'
       })
