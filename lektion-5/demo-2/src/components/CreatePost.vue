@@ -1,6 +1,6 @@
 <template>
   <div>
-      <form class="border border-light p-5">
+      <form class="border border-light p-5" @submit.prevent="create">
 
     <p class="h4 mb-4 text-center">Sign in</p>
 
@@ -14,29 +14,29 @@
     <div class="d-flex">
 
         <div class="custom-control custom-checkbox mb-4 mr-4">
-            <input type="checkbox" class="custom-control-input" id="travel">
+            <input type="checkbox" class="custom-control-input" id="travel" value="Travel" v-model="blog.categories">
             <label class="custom-control-label" for="travel">Travel</label>
         </div>
 
         <div class="custom-control custom-checkbox mb-4 mr-4">
-            <input type="checkbox" class="custom-control-input" id="food">
+            <input type="checkbox" class="custom-control-input" id="food" value="Food" v-model="blog.categories">
             <label class="custom-control-label" for="food">Food</label>
         </div>
 
         <div class="custom-control custom-checkbox mb-4 mr-4">
-            <input type="checkbox" class="custom-control-input" id="computers">
+            <input type="checkbox" class="custom-control-input" id="computers" value="Computers" v-model="blog.categories">
             <label class="custom-control-label" for="computers">Computers</label>
         </div>
 
         <div class="custom-control custom-checkbox mb-4 mr-4">
-            <input type="checkbox" class="custom-control-input" id="frontend">
+            <input type="checkbox" class="custom-control-input" id="frontend" value="Frontend" v-model="blog.categories">
             <label class="custom-control-label" for="frontend">Frontend</label>
         </div>
 
     </div>
 
     <label for="select">Author</label>
-    <select class="browser-default custom-select mb-4" id="select">
+    <select class="browser-default custom-select mb-4" id="select" v-model="blog.author">
         <option value="" disabled="" selected=""></option>
         <option v-for="(au, index) in authors" v-bind:key="index">{{ au }}</option>
     </select>
@@ -64,6 +64,11 @@
             
             <p>Content:</p>
             <p>{{ blog.content }}</p>
+            <p>Categories:</p>
+            <ul class="list-group list-group-horizontal">
+                <li v-for="(cat, index) in blog.categories" :key="index">{{ cat }}</li>
+            </ul>
+            <p>Author: {{ blog.author }}</p>
 
         </div>
 
@@ -79,7 +84,22 @@ export default {
             authors: ['Joakim', 'Jeanette', 'Liam', 'Wille'],
             blog: {
                 title: '',
-                content: ''
+                content: '',
+                categories: [],
+                author: ''
+            }
+        }
+    },
+    methods: {
+        create() {
+            if(this.blog.title !== '' && this.blog.content !== '' && this.blog.categories.length > 0 && this.blog.author !== '') {
+                this.$emit('new-post', this.blog)
+                this.blog = {
+                    title: '',
+                    content: '',
+                    categories: [],
+                    author: ''
+                }
             }
         }
     }
@@ -90,5 +110,11 @@ export default {
 <style>
     .out-title {
         min-height: 40px;
+    }
+    .list-group {
+        list-style: none;
+    }
+    .list-group li {
+        padding: 0 1rem 0.5rem 1rem;
     }
 </style>
