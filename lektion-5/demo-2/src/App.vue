@@ -1,11 +1,13 @@
 <template>
   <div class="m-3 mt-5">
-    <button class="btn m-0 z-depth-0" :class="{'btn-primary': createPost, 'btn-outline-primary': !createPost}" @click="component = 'CreatePost'">Create</button>
-    <button class="btn m-0 z-depth-0" :class="{'btn-primary': viewPosts, 'btn-outline-primary': !viewPosts}" @click="component = 'ViewPosts'">View</button>
+    <button class="btn m-0 z-depth-0" :class="{'btn-primary': create, 'btn-outline-primary': !create}" @click="component = 'CreatePost'">Create</button>
+    <button class="btn m-0 z-depth-0" :class="{'btn-primary': view, 'btn-outline-primary': !view}" @click="component = 'ViewPosts'">View</button>
     
     <div class="border border-primary mt-0 p-3">
       <div class="container">
-        <component :is="component" @new-post="posts.push($event)" v-bind:posts="posts" />
+        <keep-alive>
+          <component :is="component" @new-post="posts.push($event)" v-bind:posts="posts" />
+        </keep-alive>
       </div>
     </div>
 
@@ -24,10 +26,21 @@ export default {
   },
   data() {
     return {
-      component: 'ViewPosts',
+      component: 'CreatePost',
       posts: [],
-      createPost: false,
-      viewPosts: false
+      create: true,
+      view: false
+    }
+  },
+  watch: {
+    component: function() {
+      if(this.component == 'CreatePost') {
+        this.create = true
+        this.view = false
+      } else {
+        this.create = false
+        this.view = true
+      }
     }
   }
 }
