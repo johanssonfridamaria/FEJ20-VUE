@@ -1,13 +1,15 @@
 <template>
   <div>
-    <button class="btn">ADD</button>
+    <button class="btn" @click="addToPrice(10)">ADD</button>
+    <button class="btn" @click="subPrice(100)">SUB</button>
     <div class="list">
-      <product-card v-for="product in prodTax" :key="product.id" class="card" :product="product" />
+      <product-card v-for="product in filteredProducts" :key="product.id" class="card" :product="product" />
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ProductCard from './ProductCard'
 export default {
   components: {
@@ -34,13 +36,27 @@ export default {
   //     ]
   //   }
   // },
+  methods: {
+    addToPrice(amount) {
+      // this.$store.state.products.forEach(product => {
+      //   product.price += 10
+      // })
+      this.$store.commit('ADD', amount)
+    },
+    subPrice(amount) {
+      // this.$store.commit('SUB')
+      // this.$store.dispatch('subAsync')
+      this.$store.dispatch('subAsync', amount)
+    }
+  },
   computed: {
     products() {
       return this.$store.state.products
     },
     prodTax() {
       return this.$store.getters.taxedProducts
-    }
+    },
+    ...mapGetters(['filteredProducts'])
   } 
 }
 </script>

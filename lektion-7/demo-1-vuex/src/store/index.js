@@ -21,7 +21,10 @@ export default new Vuex.Store({
       {id: 13, name: 'Product 13', price: 700},
       {id: 14, name: 'Product 14', price: 800},
       {id: 15, name: 'Product 15', price: 900}
-    ]
+    ],
+    comp: 'Grid',
+    product: {name: 'hejhej'},
+    searchVal: ''
   },
   getters: {
     taxedProducts: (state) => {
@@ -33,12 +36,66 @@ export default new Vuex.Store({
         }
       })
       return taxedProducts
+    },
+    comp: state => state.comp,
+    product: state => state.product,
+    filteredProducts: (state, getters) => {
+      // return state.products.filter(product => product.name.toLowerCase().match(state.searchVal.toLowerCase()))
+      return getters.taxedProducts.filter(product => product.name.toLowerCase().match(state.searchVal.toLowerCase()))
     }
   },
   mutations: {
+    ADD: (state, amount) => {
+      state.products.forEach(product => {
+        product.price += amount
+      })
+    },
+    SUB: (state, amount) => {
+        state.products.forEach(product => {
+          product.price -= amount
+        })
+    },
+    CHANGE_COMP: (state, payload) => {
+      state.comp = payload
+    },
+    SET_PRODUCT: (state, id) => {
+      let prod = state.products.filter(p => p.id == id)
+      state.product = prod.map(p => {
+        return {
+          id: p.id,
+          name: p.name,
+          price: p.price,
+          taxPrice: Math.round(p.price + p.price * 0.2)
+        }
+      })
+    },
+    SEARCH: (state, val) => {
+      state.searchVal = val
+    }
   },
   actions: {
-  },
-  modules: {
+    // subAsync: (context) => {
+    //   setTimeout(() => {
+    //     context.commit('SUB')
+    //   }, 4000)
+    // }
+    subAsync: ({ commit }, amount) => {
+      setTimeout(() => {
+        commit('SUB', amount)
+      }, 4000)
+    },
+    addToPrice: ({commit}, amount) => {
+      commit('ADD', amount)
+    },
+    changeComp: ({commit}, component) => {
+      commit('CHANGE_COMP', component)
+    },
+    getProduct: ({commit}, id) => {
+      // axios.get('localhost:9999/api/products/' + id)
+      commit('SET_PRODUCT', id)
+    },
+    search: ({commit}, val) => {
+      commit('SEARCH', val)
+    }
   }
 })

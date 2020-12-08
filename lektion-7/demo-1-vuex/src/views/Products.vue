@@ -2,12 +2,12 @@
   <div class="products">
     <aside>
       <div class="buttons">
-        <button @click="comp = 'Grid'"><i class="fas fa-th-large"></i></button>
-        <button @click="comp = 'List'"><i class="fas fa-list"></i></button>
+        <button @click="changeComp('Grid')"><i class="fas fa-th-large"></i></button>
+        <button @click="changeComp('List')"><i class="fas fa-list"></i></button>
       </div>
       <form>
         <div>
-          <input type="text" placeholder="Search...">
+          <input type="text" placeholder="Search..." v-model="searchValue" @keyup="search(searchValue)">
         </div>
         <div>
           <a href="#">Filter</a>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Grid from '../components/Products/Grid'
 import List from '../components/Products/List'
 export default {
@@ -31,8 +32,15 @@ export default {
   },
   data() {
     return {
-      comp: 'Grid'
+      // comp: 'Grid'
+      searchValue: ''
     }
+  },
+  methods: {
+    ...mapActions(['changeComp', 'search'])
+  },
+  computed: {
+    ...mapGetters(['comp'])
   }
 }
 </script>

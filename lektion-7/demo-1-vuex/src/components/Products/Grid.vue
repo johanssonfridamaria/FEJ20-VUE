@@ -1,12 +1,15 @@
 <template>
   <div>
+    <button class="btn" @click="addToPrice(10)">ADD</button>
+    <button class="btn" @click="subAsync(5)">SUB</button>
     <div class="grid">
-      <product-card v-for="product in prodTax" :key="product.id" class="card" :product="product" />
+      <product-card v-for="product in filteredProducts" :key="product.id" class="card" :product="product" />
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import ProductCard from './ProductCard'
 export default {
   components: {
@@ -17,21 +20,11 @@ export default {
       
     }
   },
+  methods: {
+    ...mapActions(['subAsync', 'addToPrice'])
+  },
   computed: {
-    products() {
-      return this.$store.state.products
-    },
-    prodTax() {
-      // let taxedProducts = this.$store.state.products.map(product => {
-      //   return {
-      //     id: product.id,
-      //     name: product.name + ' + tax',
-      //     price: Math.round(product.price + product.price * 0.2)
-      //   }
-      // })
-      // return taxedProducts
-      return this.$store.getters.taxedProducts
-    }
+    ...mapGetters(['taxedProducts', 'filteredProducts'])
   }
 }
 </script>
