@@ -3,23 +3,22 @@
     <div class="card h-100">
       <!--Card image-->
       <div class="view overlay">
-        <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
+        <img class="card-img-top" :src="product.image"
           alt="Card image cap">
-        <a href="#!">
+        <router-link :to="{name: 'ProductDetails', params: {id: product.id}}" >
           <div class="mask rgba-white-slight"></div>
-        </a>
+        </router-link>
       </div>
 
       <!--Card content-->
       <div class="card-body">
 
         <!--Title-->
-        <h4 class="card-title">Card title</h4>
+        <h4 class="card-title">{{ product.name }}</h4>
         <!--Text-->
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-          card's content.</p>
+        <p class="card-text">{{ product.short }}</p>
         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-        <button type="button" class="btn btn-light-blue btn-md">Read more</button>
+        <router-link :to="{name: 'ProductDetails', params: {id: product.id}}" type="button" class="btn btn-default btn-md">Show Product</router-link>
 
       </div>
 
@@ -30,6 +29,8 @@
 
 <script>
 export default {
+  name: 'ProductCard',
+  props: ['product']
 
 }
 </script>
