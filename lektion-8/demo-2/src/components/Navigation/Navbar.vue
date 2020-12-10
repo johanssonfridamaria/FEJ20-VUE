@@ -32,10 +32,10 @@
         <!-- Shopping Cart -->
         <li class="nav-item dropdown">
           <a class="nav-link mr-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           0 <i class="fas fa-shopping-cart"></i>
+           {{ cartItemCount }} <i class="fas fa-shopping-cart"></i>
           </a>
-          <div class="dropdown-menu dropdown-menu-right dropdown-default">
-            SHOPPINGCART
+          <div class="dropdown-menu dropdown-menu-right dropdown-default shopping-cart">
+            <shoppingCart />
           </div>
         </li>
 
@@ -58,11 +58,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import ShoppingCart from '../shoppingcart/ShoppingCart'
 export default {
-
+  components: {
+    ShoppingCart
+  },
+  computed: {
+    ...mapGetters(['cartItemCount'])
+  }
 }
 </script>
 
-<style>
-
+<style scoped>
+  .shopping-cart {
+    min-width: 450px;
+  }
 </style>
