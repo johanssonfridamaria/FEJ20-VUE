@@ -18,7 +18,7 @@
           <router-link class="nav-link" to="/products">Products</router-link>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" v-if="loggedIn">
           <router-link class="nav-link" to="/manage">Manage</router-link>
         </li>
 
@@ -37,13 +37,17 @@
         </li>
 
       <!-- User Settings -->
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" v-if="loggedIn">
           <a class="nav-link dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            0 <i class="fas fa-user"></i>
+            <i class="fas fa-user"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-default">
-            USERSETTINGS
+            <userSettings />
           </div>
+        </li>
+
+        <li class="nav-item" v-if="!loggedIn">
+          <router-link class="nav-link" to="/login">Login</router-link>
         </li>
 
       </ul>
@@ -54,8 +58,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import UserSettings from '../User/UserSettings'
 export default {
-
+  name: 'Navbar',
+  components: {
+    UserSettings
+  },
+  computed: {
+    ...mapGetters(['loggedIn'])
+  }
 }
 </script>
 
