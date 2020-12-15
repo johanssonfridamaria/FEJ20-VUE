@@ -1,4 +1,5 @@
 import axios from '@/axios'
+import router from '@/router'
 
 export default {
   state: {
@@ -35,13 +36,20 @@ export default {
     }
   },
   actions: {
-    login: ({commit}, user) => {
-      axios.post('/users/login', user)
+    login: ({commit}, payload) => {
+      console.log(payload.route)
+      axios.post('/users/login', payload.user)
       .then(res => {
         if(res.status === 200) {
           // console.log(res)
           localStorage.setItem('token', res.data.token)
           commit('SET_USER', res.data.token)
+
+          if(payload.route) {
+            router.push(payload.route)
+          } else {
+            router.push('/')
+          }
         }
       })
     },
@@ -60,6 +68,14 @@ export default {
     },
     checkUser: ({commit}) => {
       commit('CHECK_USER')
+    },
+    register: async ({ dispatch }, _user) => {
+      const user = {
+        email: _user.email,
+        password: _user.password
+      }
+      await axios.post('/users/register', _user)
+      dispatch('login', {user})
     }
   }
 }

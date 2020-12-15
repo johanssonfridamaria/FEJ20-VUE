@@ -42,9 +42,13 @@ export default {
           email: this.email,
           password: this.password
         }
-        this.login(user)
+        let route = this.$route.query.redirect
+        // console.log(route)
+        this.login({user, route})
         this.email = ''
         this.password = ''
+
+        // this.$router.push(route)
       }
     }
   }
