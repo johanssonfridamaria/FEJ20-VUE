@@ -13,10 +13,11 @@ export default {
     Navbar
   },
   methods: {
-    ...mapActions(['checkUser'])
+    ...mapActions(['checkUser', 'getProducts'])
   },
   created() {
     this.checkUser()
+    this.getProducts()
   }
 }
 </script>

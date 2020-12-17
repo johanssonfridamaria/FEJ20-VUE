@@ -1,12 +1,15 @@
 <template>
-  <div>
-    <h1>Manage</h1>
+  <div class="container mt-5">
+    <productList :manage="true" />
   </div>
 </template>
 
 <script>
-export default {
-
+import ProductList from '../components/Products/ProductList'
+export default { 
+  components: {
+    ProductList
+  }
 }
 </script>
 

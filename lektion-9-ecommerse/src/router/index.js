@@ -5,6 +5,8 @@ import Manage from '../views/Manage.vue'
 import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import ProductDetails from '../views/ProductDetails.vue'
+import ManageProduct from '../views/ManageProduct.vue'
 
 Vue.use(VueRouter)
 
@@ -18,6 +20,18 @@ const routes = [
     path: '/products',
     name: 'Products',
     component: Products
+  },
+  {
+    path: '/products/details/:id',
+    name: 'ProductDetails',
+    component: ProductDetails,
+    props: true
+  },
+  {
+    path: '/manage/:id',
+    name: 'ManageProduct',
+    component: ManageProduct,
+    props: true
   },
   {
     path: '/login',

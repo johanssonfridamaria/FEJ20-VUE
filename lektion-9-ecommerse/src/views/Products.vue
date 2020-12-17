@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <h1>Products</h1>
+  <div class="container mt-5">
+    <productList />
   </div>
 </template>
 
 <script>
+import ProductList from '../components/Products/ProductList'
 export default {
+  components: {
+    ProductList
+  }
   // data() {
   //   return {
   //     products: []
